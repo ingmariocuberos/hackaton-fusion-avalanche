@@ -1,0 +1,494 @@
+{
+  "Matemáticas": [
+    [
+      "Derivadas de primer orden",
+      "Aprende a calcular tasas de cambio instantáneas en funciones simples."
+    ],
+    [
+      "Derivadas de segundo orden",
+      "Explora la aceleración y concavidad en funciones matemáticas."
+    ],
+    [
+      "Matriz Gauss Jordan",
+      "Descubre cómo resolver sistemas lineales paso a paso de forma estructurada."
+    ],
+    [
+      "Límites",
+      "Comprende el comportamiento de funciones al acercarse a un valor específico."
+    ],
+    [
+      "Integrales definidas",
+      "Calcula áreas bajo curvas entre dos puntos definidos."
+    ],
+    [
+      "Integrales indefinidas",
+      "Encuentra funciones originales a partir de sus derivadas."
+    ],
+    [
+      "Álgebra lineal",
+      "Manipula ecuaciones lineales y estructuras vectoriales."
+    ],
+    [
+      "Números complejos",
+      "Resuelve ecuaciones que no tienen solución en los reales."
+    ],
+    [
+      "Funciones exponenciales",
+      "Modela crecimiento y decaimiento con funciones exponenciales."
+    ],
+    [
+      "Funciones logarítmicas",
+      "Inversa de exponenciales, usadas en cálculos de escala."
+    ],
+    [
+      "Probabilidad",
+      "Evalúa la posibilidad de que ocurra un evento."
+    ],
+    [
+      "Estadística descriptiva",
+      "Resume y analiza datos mediante tablas y gráficos."
+    ],
+    [
+      "Vectores",
+      "Representa magnitudes con dirección y sentido en el espacio."
+    ],
+    [
+      "Geometría analítica",
+      "Estudia figuras geométricas mediante coordenadas."
+    ],
+    [
+      "Ecuaciones diferenciales",
+      "Modela sistemas que cambian con el tiempo."
+    ],
+    [
+      "Sucesiones y series",
+      "Analiza patrones y sumas infinitas o finitas."
+    ],
+    [
+      "Teorema de Taylor",
+      "Aproxima funciones mediante polinomios."
+    ],
+    [
+      "Matrices y determinantes",
+      "Soluciona múltiples ecuaciones simultáneas."
+    ],
+    [
+      "Transformadas de Laplace",
+      "Simplifica ecuaciones diferenciales para resolverlas."
+    ],
+    [
+      "Sistemas de ecuaciones lineales",
+      "Resuelve varias ecuaciones con múltiples incógnitas."
+    ]
+  ],
+  "Español": [
+    [
+      "Diptongo",
+      "Identifica combinaciones de vocales en una misma sílaba."
+    ],
+    [
+      "Triptongo",
+      "Aprende cómo tres vocales forman una sola sílaba en una palabra."
+    ],
+    [
+      "Esdrújulas",
+      "Reconoce palabras que siempre se tildan por su acento en la antepenúltima sílaba."
+    ],
+    [
+      "Agudas y graves",
+      "Clasifica palabras según la posición de su acento prosódico."
+    ],
+    [
+      "Uso de la coma",
+      "Domina la pausa breve que organiza ideas en oraciones."
+    ],
+    [
+      "Uso del punto",
+      "Entiende cómo separar oraciones completas correctamente."
+    ],
+    [
+      "Uso de la tilde",
+      "Aplica las reglas de acentuación para escribir correctamente."
+    ],
+    [
+      "Clases de oraciones",
+      "Identifica oraciones simples, compuestas y sus estructuras."
+    ],
+    [
+      "Sujeto y predicado",
+      "Reconoce las partes esenciales de una oración."
+    ],
+    [
+      "Verbos regulares e irregulares",
+      "Diferencia verbos según la forma en que se conjugan."
+    ],
+    [
+      "Textos narrativos",
+      "Aprende a identificar y construir relatos con estructura."
+    ],
+    [
+      "Textos argumentativos",
+      "Construye ideas con lógica y argumentos sólidos."
+    ],
+    [
+      "Recursos literarios",
+      "Descubre técnicas que embellecen el lenguaje en literatura."
+    ],
+    [
+      "Análisis de poemas",
+      "Interpreta el significado y forma de un poema."
+    ],
+    [
+      "Comprensión lectora",
+      "Extrae información e interpreta textos escritos."
+    ],
+    [
+      "Ortografía básica",
+      "Aplica normas de escritura para evitar errores comunes."
+    ],
+    [
+      "Concordancia verbal",
+      "Asegura que verbo y sujeto coincidan en número y persona."
+    ],
+    [
+      "Cohesión y coherencia",
+      "Conecta ideas para lograr textos fluidos y entendibles."
+    ],
+    [
+      "Pronombres",
+      "Reemplaza sustantivos para evitar repeticiones."
+    ],
+    [
+      "Adjetivos calificativos",
+      "Describe cualidades de los sustantivos con precisión."
+    ]
+  ],
+  "Biología": [
+    [
+      "Célula procariota y eucariota",
+      "Compara tipos celulares y sus estructuras internas."
+    ],
+    [
+      "ADN y ARN",
+      "Conoce las moléculas que contienen la información genética."
+    ],
+    [
+      "Mitosis y meiosis",
+      "Estudia la división celular y su función biológica."
+    ],
+    [
+      "Teoría celular",
+      "Entiende que todos los seres vivos están formados por células."
+    ],
+    [
+      "Fotosíntesis",
+      "Explora cómo las plantas transforman luz en energía."
+    ],
+    [
+      "Respiración celular",
+      "Analiza cómo las células obtienen energía del alimento."
+    ],
+    [
+      "Reinos de la vida",
+      "Clasifica los seres vivos según sus características."
+    ],
+    [
+      "Taxonomía",
+      "Organiza y nombra organismos mediante jerarquías."
+    ],
+    [
+      "Ciclos biogeoquímicos",
+      "Describe cómo circulan elementos en la naturaleza."
+    ],
+    [
+      "Sistemas del cuerpo humano",
+      "Estudia funciones y órganos del cuerpo humano."
+    ],
+    [
+      "Genética mendeliana",
+      "Comprende cómo se heredan los rasgos biológicos."
+    ],
+    [
+      "Adaptaciones biológicas",
+      "Explica cómo los seres vivos se ajustan al ambiente."
+    ],
+    [
+      "Inmunología básica",
+      "Conoce cómo el cuerpo se defiende de enfermedades."
+    ],
+    [
+      "Ecosistemas",
+      "Estudia relaciones entre organismos y su entorno."
+    ],
+    [
+      "Relaciones interespecíficas",
+      "Describe interacciones entre distintas especies."
+    ],
+    [
+      "Evolución",
+      "Entiende cómo cambian las especies a lo largo del tiempo."
+    ],
+    [
+      "Biotecnología",
+      "Aplica técnicas biológicas en la industria y medicina."
+    ],
+    [
+      "Enfermedades genéticas",
+      "Identifica trastornos heredados y su causa genética."
+    ],
+    [
+      "Órganos y tejidos",
+      "Estudia las partes que componen los organismos."
+    ],
+    [
+      "Homeostasis",
+      "Analiza el equilibrio interno del cuerpo ante cambios externos."
+    ]
+  ],
+  "Geografía": [
+    [
+      "Capas de la Tierra",
+      "Conoce la estructura interna del planeta."
+    ],
+    [
+      "Placas tectónicas",
+      "Estudia los movimientos de la litosfera terrestre."
+    ],
+    [
+      "Climas del mundo",
+      "Identifica zonas según su temperatura y precipitaciones."
+    ],
+    [
+      "Hidrografía",
+      "Analiza ríos, lagos, mares y su importancia."
+    ],
+    [
+      "Relieve terrestre",
+      "Clasifica montañas, valles, llanuras y depresiones."
+    ],
+    [
+      "Mapas y coordenadas",
+      "Aprende a ubicar lugares mediante mapas y sistemas."
+    ],
+    [
+      "Recursos naturales",
+      "Distingue materiales útiles extraídos del entorno."
+    ],
+    [
+      "Geografía económica",
+      "Relaciona actividades productivas con el espacio geográfico."
+    ],
+    [
+      "Urbanización",
+      "Estudia el crecimiento y características de las ciudades."
+    ],
+    [
+      "Migración",
+      "Analiza desplazamientos de población y sus causas."
+    ],
+    [
+      "Demografía",
+      "Interpreta datos sobre población y su distribución."
+    ],
+    [
+      "Regiones naturales",
+      "Identifica zonas con características físicas similares."
+    ],
+    [
+      "Impacto ambiental",
+      "Evalúa consecuencias de la acción humana en la naturaleza."
+    ],
+    [
+      "Desarrollo sostenible",
+      "Busca equilibrio entre progreso y conservación."
+    ],
+    [
+      "Zonas horarias",
+      "Comprende la división del tiempo según la longitud terrestre."
+    ],
+    [
+      "Paisajes culturales",
+      "Estudia entornos modificados por la actividad humana."
+    ],
+    [
+      "Geopolítica",
+      "Analiza relaciones de poder entre territorios."
+    ],
+    [
+      "Fronteras y territorios",
+      "Define límites entre países y regiones."
+    ],
+    [
+      "Globalización",
+      "Explora la conexión económica y cultural mundial."
+    ],
+    [
+      "Riesgos naturales",
+      "Identifica fenómenos naturales que pueden causar desastres."
+    ]
+  ],
+  "Filosofía": [
+    [
+      "Sócrates",
+      "Conoce al filósofo griego que inició la reflexión ética y el método socrático."
+    ],
+    [
+      "Platón",
+      "Estudia sus ideas sobre el mundo de las ideas y la justicia."
+    ],
+    [
+      "Aristóteles",
+      "Explora la lógica, la ética y la política en su pensamiento."
+    ],
+    [
+      "Filosofía medieval",
+      "Analiza la unión entre fe y razón en la Edad Media."
+    ],
+    [
+      "Racionalismo",
+      "Corriente que afirma que el conocimiento viene de la razón."
+    ],
+    [
+      "Empirismo",
+      "Teoría que sostiene que el conocimiento proviene de la experiencia."
+    ],
+    [
+      "Ilustración",
+      "Movimiento que promovió la razón y el pensamiento crítico."
+    ],
+    [
+      "Kant",
+      "Descubre su propuesta sobre el deber y el conocimiento humano."
+    ],
+    [
+      "Nietzsche",
+      "Cuestiona la moral tradicional y propone el superhombre."
+    ],
+    [
+      "Existencialismo",
+      "Corriente centrada en la libertad, la angustia y la existencia."
+    ],
+    [
+      "Ética y moral",
+      "Distingue entre principios morales y normas éticas."
+    ],
+    [
+      "Lógica formal",
+      "Aprende las reglas para razonar correctamente."
+    ],
+    [
+      "Filosofía del lenguaje",
+      "Estudia cómo el lenguaje influye en el pensamiento."
+    ],
+    [
+      "Filosofía política",
+      "Analiza el poder, el estado y la justicia en la sociedad."
+    ],
+    [
+      "Filosofía contemporánea",
+      "Explora ideas del siglo XX y XXI sobre conocimiento y cultura."
+    ],
+    [
+      "Fenomenología",
+      "Estudia la conciencia y la experiencia desde dentro."
+    ],
+    [
+      "Dialéctica",
+      "Método de razonamiento basado en la contradicción y el cambio."
+    ],
+    [
+      "El ser y el conocimiento",
+      "Cuestiones centrales de la metafísica y la epistemología."
+    ],
+    [
+      "Humanismo",
+      "Corriente que pone al ser humano como centro del pensamiento."
+    ],
+    [
+      "Filosofía de la ciencia",
+      "Reflexiona sobre métodos, teorías y límites del saber científico."
+    ]
+  ],
+  "Tecnología": [
+    [
+      "Hardware y software",
+      "Distingue entre componentes físicos y programas del computador."
+    ],
+    [
+      "Componentes del computador",
+      "Identifica partes internas y externas del equipo."
+    ],
+    [
+      "Internet y redes",
+      "Aprende cómo se conectan dispositivos y comparten datos."
+    ],
+    [
+      "Algoritmos",
+      "Secuencias de pasos para resolver problemas de forma ordenada."
+    ],
+    [
+      "Programación básica",
+      "Inicia en el lenguaje de instrucciones para computadoras."
+    ],
+    [
+      "Seguridad informática",
+      "Protege tus datos de accesos no autorizados."
+    ],
+    [
+      "Sistemas operativos",
+      "Gestionan recursos y permiten usar el computador."
+    ],
+    [
+      "Bases de datos",
+      "Organiza, almacena y consulta información estructurada."
+    ],
+    [
+      "Inteligencia artificial",
+      "Simula procesos humanos de pensamiento en máquinas."
+    ],
+    [
+      "Robótica",
+      "Diseño y construcción de dispositivos autónomos programables."
+    ],
+    [
+      "Diseño asistido por computador",
+      "Crea planos y modelos digitales con software especializado."
+    ],
+    [
+      "Realidad aumentada",
+      "Fusión de elementos virtuales con el mundo real."
+    ],
+    [
+      "Energías renovables",
+      "Fuentes de energía que se regeneran naturalmente."
+    ],
+    [
+      "Impresión 3D",
+      "Produce objetos tridimensionales capa por capa."
+    ],
+    [
+      "Domótica",
+      "Automatiza funciones del hogar mediante tecnología."
+    ],
+    [
+      "Automatización",
+      "Sistemas que funcionan sin intervención humana constante."
+    ],
+    [
+      "Tecnologías de la información",
+      "Procesan y comunican datos digitales."
+    ],
+    [
+      "Computación en la nube",
+      "Almacena y procesa información a través de internet."
+    ],
+    [
+      "Ciberseguridad",
+      "Defiende sistemas y redes contra ataques digitales."
+    ],
+    [
+      "Blockchain",
+      "Tecnología de registros digitales seguros y descentralizados."
+    ]
+  ]
+}
