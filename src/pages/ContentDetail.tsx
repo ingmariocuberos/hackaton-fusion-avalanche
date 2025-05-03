@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -8,19 +8,21 @@ import {
   Button,
   Box,
   Grid,
+  TextField,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { contentData } from '../data/contentData';
 
 const INCENTIVES = [
-  { label: 'Básico', value: 0.00000 },
-  { label: 'Avanzado', value: 0.00000 },
-  { label: 'Épico', value: 0.00000 },
+  { label: 'Básico', value: '0.00000' },
+  { label: 'Avanzado', value: '0.00000' },
+  { label: 'Épico', value: '0.00000' },
 ];
 
 const ContentDetail: React.FC = () => {
   const { categoryId, subcategoryId } = useParams<{ categoryId: string; subcategoryId: string }>();
   const navigate = useNavigate();
+  const [incentives, setIncentives] = useState(INCENTIVES);
 
   const category = contentData.find(cat => cat.title === categoryId);
   const subcategory = category?.items[parseInt(subcategoryId || '0')];
@@ -34,6 +36,15 @@ const ContentDetail: React.FC = () => {
       </Container>
     );
   }
+
+  const handleIncentiveChange = (index: number, value: string) => {
+    // Permitir solo números y hasta 5 decimales
+    if (/^\d*(\.\d{0,5})?$/.test(value) || value === '') {
+      const newIncentives = [...incentives];
+      newIncentives[index].value = value;
+      setIncentives(newIncentives);
+    }
+  };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -75,15 +86,24 @@ const ContentDetail: React.FC = () => {
             Elige los incentivos:
           </Typography>
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            {INCENTIVES.map((item) => (
+            {incentives.map((item, idx) => (
               <Grid size={{ xs: 12, sm: 4 }} key={item.label}>
                 <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
                   <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
                     {item.label}
                   </Typography>
-                  <Typography variant="h5" sx={{ fontFamily: 'monospace', mb: 1 }}>
-                    {item.value.toFixed(5)}
-                  </Typography>
+                  <TextField
+                    value={item.value}
+                    onChange={e => handleIncentiveChange(idx, e.target.value)}
+                    inputProps={{
+                      inputMode: 'decimal',
+                      pattern: '^\\d*(\\.\\d{0,5})?$',
+                      style: { textAlign: 'center', fontFamily: 'monospace', fontSize: 24 },
+                    }}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                  />
                   <Typography variant="body2" color="text.secondary">
                     AVAX
                   </Typography>
@@ -91,6 +111,11 @@ const ContentDetail: React.FC = () => {
               </Grid>
             ))}
           </Grid>
+          <Box mt={4} textAlign="center">
+            <Button variant="contained" color="primary" size="large">
+              Empezar
+            </Button>
+          </Box>
         </Box>
       </Paper>
     </Container>
