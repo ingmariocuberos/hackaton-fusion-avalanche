@@ -9,9 +9,11 @@ import {
   Box,
   Grid,
   TextField,
+  CircularProgress,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { contentData } from '../data/contentData';
+import { useAvaxPrice } from '../hooks/useAvaxPrice';
 
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
@@ -19,10 +21,15 @@ const INCENTIVES = [
   { label: 'Épico', value: '0.00000' },
 ];
 
+function formatCOP(value: number) {
+  return value.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+}
+
 const ContentDetail: React.FC = () => {
   const { categoryId, subcategoryId } = useParams<{ categoryId: string; subcategoryId: string }>();
   const navigate = useNavigate();
   const [incentives, setIncentives] = useState(INCENTIVES);
+  const { price: avaxPrice, loading: avaxLoading, error: avaxError } = useAvaxPrice();
 
   const category = contentData.find(cat => cat.title === categoryId);
   const subcategory = category?.items[parseInt(subcategoryId || '0')];
@@ -43,6 +50,34 @@ const ContentDetail: React.FC = () => {
       const newIncentives = [...incentives];
       newIncentives[index].value = value;
       setIncentives(newIncentives);
+    }
+  };
+
+  const handleStart = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/groq-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic: subcategory.title,
+          category: category.title,
+        }),
+      });
+      if (!response.ok) {
+        alert('Error al generar el PDF');
+        return;
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${subcategory.title.replace(/\s+/g, '_')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert('Error al generar el PDF');
     }
   };
 
@@ -86,34 +121,47 @@ const ContentDetail: React.FC = () => {
             Elige los incentivos:
           </Typography>
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            {incentives.map((item, idx) => (
-              <Grid size={{ xs: 12, sm: 4 }} key={item.label}>
-                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    {item.label}
-                  </Typography>
-                  <TextField
-                    value={item.value}
-                    onChange={e => handleIncentiveChange(idx, e.target.value)}
-                    inputProps={{
-                      inputMode: 'decimal',
-                      pattern: '^\\d*(\\.\\d{0,5})?$',
-                      style: { textAlign: 'center', fontFamily: 'monospace', fontSize: 24 },
-                    }}
-                    variant="outlined"
-                    fullWidth
-                    margin="dense"
-                  />
-                  <Typography variant="body2" color="text.secondary">
-                    AVAX
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
+            {incentives.map((item, idx) => {
+              const avax = parseFloat(item.value) || 0;
+              const cop = avaxPrice ? avax * avaxPrice : 0;
+              return (
+                <Grid size={{ xs: 12, sm: 4 }} key={item.label}>
+                  <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      {item.label}
+                    </Typography>
+                    <TextField
+                      value={item.value}
+                      onChange={e => handleIncentiveChange(idx, e.target.value)}
+                      inputProps={{
+                        inputMode: 'decimal',
+                        pattern: '^\\d*(\\.\\d{0,5})?$',
+                        style: { textAlign: 'center', fontFamily: 'monospace', fontSize: 24 },
+                      }}
+                      variant="outlined"
+                      fullWidth
+                      margin="dense"
+                    />
+                    <Typography variant="body2" color="text.secondary">
+                      AVAX
+                    </Typography>
+                    {avaxLoading ? (
+                      <Box mt={1}><CircularProgress size={18} /></Box>
+                    ) : avaxError ? (
+                      <Typography variant="caption" color="error">No se pudo obtener el precio</Typography>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary" mt={0.5}>
+                        aprox {formatCOP(cop)} COP
+                      </Typography>
+                    )}
+                  </Paper>
+                </Grid>
+              );
+            })}
           </Grid>
           <Box mt={4} textAlign="center">
-            <Button variant="contained" color="primary" size="large">
-              Empezar
+            <Button variant="contained" color="primary" size="large" onClick={handleStart}>
+              Empezar!
             </Button>
           </Box>
         </Box>
