@@ -14,6 +14,7 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import { contentData } from '../data/contentData';
 import { useAvaxPrice } from '../hooks/useAvaxPrice';
+import Snackbar from '@mui/material/Snackbar';
 
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
@@ -31,6 +32,7 @@ const ContentDetail: React.FC = () => {
   const [incentives, setIncentives] = useState(INCENTIVES);
   const { price: avaxPrice, loading: avaxLoading, error: avaxError } = useAvaxPrice();
   const [loadingPDF, setLoadingPDF] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const category = contentData.find(cat => cat.title === categoryId);
   const subcategory = category?.items[parseInt(subcategoryId || '0')];
@@ -79,6 +81,7 @@ const ContentDetail: React.FC = () => {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
+      setOpenSnackbar(true);
     } catch (err) {
       alert('Error al generar el PDF');
     } finally {
@@ -178,6 +181,13 @@ const ContentDetail: React.FC = () => {
           </Box>
         </Box>
       </Paper>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        message="Reto Iniciado!"
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
     </Container>
   );
 };
