@@ -35,12 +35,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const App: React.FC = () => {
   return (
-    <PrivyProvider appId="cma9xwkey029wic0mivacgcbq"
-     config={{
-      appearance: {
-        walletList: ['detected_ethereum_wallets']
-      } 
-     }}>
+    <PrivyProvider appId="cma9xwkey029wic0mivacgcbq">
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AuthProvider>

@@ -29,7 +29,7 @@ const WalletConnectButton = () => {
   };
 
   return (
-    <Box sx={{ position: 'absolute', top: 16, right: 24 }}>
+    <Box sx={{ ml: 2 }}>
       {authenticated ? (
         <Button
           variant="outlined"
@@ -91,7 +91,7 @@ const Navbar = () => {
 
   return (
     <AppBar position="static" color="default" elevation={1}>
-      <Toolbar>
+      <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography
           variant="h6"
           component="div"
@@ -141,10 +141,13 @@ const Navbar = () => {
                 Contenido
               </MenuItem>
               <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
+              <MenuItem>
+                <WalletConnectButton />
+              </MenuItem>
             </Menu>
           </>
         ) : (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1, justifyContent: 'flex-end' }}>
             <Button
               color="inherit"
               onClick={() => handleNavigate('/')}
@@ -173,9 +176,10 @@ const Navbar = () => {
             >
               Cerrar Sesión
             </Button>
+            <WalletConnectButton />
           </Box>
         )}
-        <WalletConnectButton />
+        {!isMobile && <WalletConnectButton />}
       </Toolbar>
     </AppBar>
   );
