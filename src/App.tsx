@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Content from './pages/Content';
 import ContentDetail from './pages/ContentDetail';
 import Login from './pages/Login';
+import { PrivyProvider } from '@privy-io/react-auth';
 
 const theme = createTheme({
   palette: {
@@ -34,43 +35,50 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider>
-        <Router>
-          <MainLayout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route 
-                path="/login" 
-                element={
-                  <PublicRoute>
-                    <Login />
-                  </PublicRoute>
-                } 
-              />
-              <Route
-                path="/contenido"
-                element={
-                  <PrivateRoute>
-                    <Content />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/contenido/:categoryId/:subcategoryId"
-                element={
-                  <PrivateRoute>
-                    <ContentDetail />
-                  </PrivateRoute>
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </MainLayout>
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
+    <PrivyProvider appId="cma9xwkey029wic0mivacgcbq"
+     config={{
+      appearance: {
+        walletList: ['detected_ethereum_wallets']
+      } 
+     }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AuthProvider>
+          <Router>
+            <MainLayout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route 
+                  path="/login" 
+                  element={
+                    <PublicRoute>
+                      <Login />
+                    </PublicRoute>
+                  } 
+                />
+                <Route
+                  path="/contenido"
+                  element={
+                    <PrivateRoute>
+                      <Content />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/contenido/:categoryId/:subcategoryId"
+                  element={
+                    <PrivateRoute>
+                      <ContentDetail />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </MainLayout>
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
+    </PrivyProvider>
   );
 };
 

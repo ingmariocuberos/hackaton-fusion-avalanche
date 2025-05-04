@@ -30,6 +30,7 @@ const ContentDetail: React.FC = () => {
   const navigate = useNavigate();
   const [incentives, setIncentives] = useState(INCENTIVES);
   const { price: avaxPrice, loading: avaxLoading, error: avaxError } = useAvaxPrice();
+  const [loadingPDF, setLoadingPDF] = useState(false);
 
   const category = contentData.find(cat => cat.title === categoryId);
   const subcategory = category?.items[parseInt(subcategoryId || '0')];
@@ -54,6 +55,7 @@ const ContentDetail: React.FC = () => {
   };
 
   const handleStart = async () => {
+    setLoadingPDF(true);
     try {
       const response = await fetch('http://localhost:4000/api/groq-pdf', {
         method: 'POST',
@@ -65,6 +67,7 @@ const ContentDetail: React.FC = () => {
       });
       if (!response.ok) {
         alert('Error al generar el PDF');
+        setLoadingPDF(false);
         return;
       }
       const blob = await response.blob();
@@ -78,6 +81,8 @@ const ContentDetail: React.FC = () => {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       alert('Error al generar el PDF');
+    } finally {
+      setLoadingPDF(false);
     }
   };
 
@@ -160,9 +165,16 @@ const ContentDetail: React.FC = () => {
             })}
           </Grid>
           <Box mt={4} textAlign="center">
-            <Button variant="contained" color="primary" size="large" onClick={handleStart}>
-              Empezar!
-            </Button>
+            {loadingPDF ? (
+              <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                <CircularProgress size={32} />
+                <Typography variant="body2" color="text.secondary">Generando PDF...</Typography>
+              </Box>
+            ) : (
+              <Button variant="contained" color="primary" size="large" onClick={handleStart}>
+                Empezar!
+              </Button>
+            )}
           </Box>
         </Box>
       </Paper>

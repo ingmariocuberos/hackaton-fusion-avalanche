@@ -16,6 +16,46 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
+import { usePrivy } from '@privy-io/react-auth';
+
+const WalletConnectButton = () => {
+  const { connectWallet, ready, authenticated, user, logout } = usePrivy();
+  if (!ready) return null;
+
+  const handleConnect = () => {
+    connectWallet({
+      walletList: ['metamask', 'detected_ethereum_wallets', 'coinbase_wallet', 'rainbow', 'wallet_connect'],
+    });
+  };
+
+  return (
+    <Box sx={{ position: 'absolute', top: 16, right: 24 }}>
+      {authenticated ? (
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          sx={{ minWidth: 0, px: 1.5, fontSize: 13 }}
+          onClick={logout}
+        >
+          {user?.wallet?.address
+            ? `${user.wallet.address.slice(0, 6)}...${user.wallet.address.slice(-4)}`
+            : user?.email?.address || 'Desconectar'}
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          sx={{ minWidth: 0, px: 1.5, fontSize: 13 }}
+          onClick={handleConnect}
+        >
+          Conectar billetera
+        </Button>
+      )}
+    </Box>
+  );
+};
 
 const Navbar = () => {
   const { currentUser } = useAuth();
@@ -135,6 +175,7 @@ const Navbar = () => {
             </Button>
           </Box>
         )}
+        <WalletConnectButton />
       </Toolbar>
     </AppBar>
   );
