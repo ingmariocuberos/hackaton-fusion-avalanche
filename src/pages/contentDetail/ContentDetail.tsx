@@ -12,9 +12,10 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import { contentData } from '../data/contentData';
-import { useAvaxPrice } from '../hooks/useAvaxPrice';
+import { useAvaxPrice } from '../../hooks/useAvaxPrice';
 import Snackbar from '@mui/material/Snackbar';
+import { contentDetailContainerStyle } from './styles';
+import { contentData } from '../../data/contentData';
 
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
@@ -90,7 +91,7 @@ const ContentDetail: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <Container maxWidth="md" sx={contentDetailContainerStyle}>
       <Box sx={{ mb: 3 }}>
         <Button
           startIcon={<ArrowBack />}

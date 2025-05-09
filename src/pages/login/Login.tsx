@@ -8,8 +8,9 @@ import {
   Container 
 } from '@mui/material';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom';
+import { loginContainerStyle } from './styles';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ const Login: React.FC = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Paper elevation={3} sx={{ p: 4, mt: 8 }}>
+      <Paper elevation={3} sx={loginContainerStyle}>
         <Typography component="h1" variant="h5" align="center">
           Iniciar Sesión
         </Typography>

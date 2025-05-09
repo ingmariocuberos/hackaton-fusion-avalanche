@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Box, Container, Paper, Typography, Button } from '@mui/material';
 import EditableField from '../components/EditableField';
 import { getAuth } from 'firebase/auth';
-import { encryptionHelper } from '../utils/encryptionHelper';
+import { encryptionHelper } from '../../utils/encryptionHelper';
+import { definicionContainerStyle } from './styles';
 
 interface Parametro {
   id: number;
@@ -152,7 +153,7 @@ const Definicion: React.FC = () => {
   };
 
   return (
-    <Box sx={{ position: 'relative', minHeight: 'calc(100vh - 200px)' }}>
+    <Box sx={definicionContainerStyle}>
       <Container maxWidth="lg" sx={{ mb: 10 }}>
         <Paper sx={{ p: 3 }}>
           <Typography variant="h5" gutterBottom>

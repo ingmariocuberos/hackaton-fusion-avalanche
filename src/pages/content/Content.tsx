@@ -5,13 +5,13 @@ import {
   ListItem,
   ListItemText,
   Collapse,
-  Box,
   Typography,
   Paper,
   Container,
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { contentData } from '../data/contentData';
+import { contentData } from '../../data/contentData';
+import { sectionButtonStyle } from './styles';
 
 const Content: React.FC = () => {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({});
@@ -47,20 +47,7 @@ const Content: React.FC = () => {
             <ListItem
               component="button"
               onClick={() => handleClick(section.title)}
-              sx={{
-                backgroundColor: openSections[section.title] ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.08)',
-                },
-                width: '100%',
-                textAlign: 'left',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '8px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
+              sx={sectionButtonStyle}
             >
               <ListItemText
                 primary={
@@ -78,19 +65,7 @@ const Content: React.FC = () => {
                     key={index}
                     component="button"
                     onClick={() => handleItemClick(section.title, index)}
-                    sx={{
-                      pl: 4,
-                      '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                      },
-                      width: '100%',
-                      textAlign: 'left',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '8px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
+                    sx={sectionButtonStyle}
                   >
                     <ListItemText
                       primary={

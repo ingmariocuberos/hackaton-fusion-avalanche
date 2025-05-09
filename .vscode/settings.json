@@ -1,0 +1,5 @@
+{
+    "conventionalCommits.scopes": [
+        "Organizing files in github avoiding information expose in this repo"
+    ]
+}
