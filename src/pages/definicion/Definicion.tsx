@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Box, Container, Paper, Typography, Button } from '@mui/material';
-import EditableField from '../components/EditableField';
 import { getAuth } from 'firebase/auth';
 import { encryptionHelper } from '../../utils/encryptionHelper';
 import { definicionContainerStyle } from './styles';
+import EditableField from '../../components/EditableField';
 
 interface Parametro {
   id: number;

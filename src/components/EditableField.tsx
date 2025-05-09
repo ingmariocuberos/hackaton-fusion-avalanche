@@ -17,7 +17,6 @@ const EditableField: React.FC<EditableFieldProps> = ({ title, value, onChange, o
       const selection = window.getSelection();
       let cursorPosition = 0;
 
-      // Solo intentar obtener la posición del cursor si hay una selección activa
       if (selection && selection.rangeCount > 0) {
         try {
           const range = selection.getRangeAt(0);
@@ -31,14 +30,12 @@ const EditableField: React.FC<EditableFieldProps> = ({ title, value, onChange, o
       
       textFieldRef.current.innerHTML = value;
       
-      // Solo intentar restaurar el cursor si el elemento tiene contenido
       if (textFieldRef.current.firstChild && selection) {
         try {
           const range = document.createRange();
           const textNode = textFieldRef.current.firstChild;
           const maxLength = textNode.textContent?.length || 0;
           
-          // Asegurarse de que la posición del cursor no exceda la longitud del texto
           cursorPosition = Math.min(cursorPosition, maxLength);
           
           range.setStart(textNode, cursorPosition);

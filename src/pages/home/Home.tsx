@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
-import capibaraImg from '../../assets/capibara.webp';
+import capibaraImg from '../../assets/capibara.png';
 import { homeContainerStyle } from './styles';
 
 const Home: React.FC = () => {

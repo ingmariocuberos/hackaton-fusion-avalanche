@@ -16,6 +16,7 @@ import { useAvaxPrice } from '../../hooks/useAvaxPrice';
 import Snackbar from '@mui/material/Snackbar';
 import { contentDetailContainerStyle } from './styles';
 import { contentData } from '../../data/contentData';
+import { apiService } from '../../global/standardService/apiService';
 
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
@@ -60,20 +61,14 @@ const ContentDetail: React.FC = () => {
   const handleStart = async () => {
     setLoadingPDF(true);
     try {
-      const response = await fetch('http://localhost:4000/api/groq-pdf', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          topic: subcategory.title,
-          category: category.title,
-        }),
+      const blob = await apiService.post<Blob>('/groq-pdf', {
+        topic: subcategory.title,
+        category: category.title,
+      }, {
+        'Content-Type': 'application/json',
+        'Accept': 'application/pdf'
       });
-      if (!response.ok) {
-        alert('Error al generar el PDF');
-        setLoadingPDF(false);
-        return;
-      }
-      const blob = await response.blob();
+
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

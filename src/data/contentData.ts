@@ -1,11 +1,4 @@
-export interface ContentItem {
-  title: string;
-  items: {
-    title: string;
-    description: string;
-    content: string[];
-  }[];
-}
+import { ContentItem } from "../interfaces/contentItem.interface";
 
 export const contentData: ContentItem[] = [
   {

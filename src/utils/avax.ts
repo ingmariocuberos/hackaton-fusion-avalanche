@@ -1,6 +1,10 @@
+import { apiService } from '../global/standardService/apiService';
+
 export async function getAvaxPriceCOP(): Promise<number> {
-  const res = await fetch("http://localhost:4000/api/avax-cop");
-  if (!res.ok) throw new Error("No se pudo obtener el precio de AVAX");
-  const data = await res.json();
-  return data?.price ?? 0;
+  try {
+    const data = await apiService.get<{ price: number }>('/avax-cop');
+    return data?.price ?? 0;
+  } catch (error) {
+    throw new Error("No se pudo obtener el precio de AVAX");
+  }
 }
