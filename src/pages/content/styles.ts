@@ -12,4 +12,6 @@ export const sectionButtonStyle: SxProps<Theme> = {
   padding: "8px 16px",
   display: "flex",
   alignItems: "center",
+  backgroundColor: "transparent",
+  boxShadow: "none",
 };

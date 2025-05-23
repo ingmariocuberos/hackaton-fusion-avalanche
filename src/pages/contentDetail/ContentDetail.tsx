@@ -10,6 +10,8 @@ import {
   Grid,
   TextField,
   CircularProgress,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { useAvaxPrice } from '../../hooks/useAvaxPrice';
@@ -35,6 +37,8 @@ const ContentDetail: React.FC = () => {
   const { price: avaxPrice, loading: avaxLoading, error: avaxError } = useAvaxPrice();
   const [loadingPDF, setLoadingPDF] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const category = contentData.find(cat => cat.title === categoryId);
   const subcategory = category?.items[parseInt(subcategoryId || '0')];
@@ -86,7 +90,7 @@ const ContentDetail: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={contentDetailContainerStyle}>
+    <Container maxWidth="md" sx={{ ...contentDetailContainerStyle, paddingTop: '80px', paddingBottom: isMobile ? '32px' : undefined }}>
       <Box sx={{ mb: 3 }}>
         <Button
           startIcon={<ArrowBack />}

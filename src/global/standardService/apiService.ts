@@ -1,6 +1,7 @@
 import axios from 'axios';
+import envs from '../../config/env.config';
 
-const BASE_URL = 'http://localhost:4000/api';
+const BASE_URL = envs.apiBaseUrl;
 
 interface RequestConfig {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';

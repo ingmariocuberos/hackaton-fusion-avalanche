@@ -14,14 +14,11 @@ import { contentData } from '../../data/contentData';
 import { sectionButtonStyle } from './styles';
 
 const Content: React.FC = () => {
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({});
+  const [openSection, setOpenSection] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleClick = (title: string) => {
-    setOpenSections(prev => ({
-      ...prev,
-      [title]: !prev[title]
-    }));
+    setOpenSection(prev => (prev === title ? null : title));
   };
 
   const handleItemClick = (categoryTitle: string, itemIndex: number) => {
@@ -29,7 +26,7 @@ const Content: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <Container maxWidth="md" sx={{ py: 10 }}>
       <Typography variant="h4" component="h1" gutterBottom align="center">
         Contenido Educativo
       </Typography>
@@ -56,9 +53,9 @@ const Content: React.FC = () => {
                   </Typography>
                 }
               />
-              {openSections[section.title] ? <ExpandLess /> : <ExpandMore />}
+              {openSection === section.title ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={openSections[section.title]} timeout="auto" unmountOnExit>
+            <Collapse in={openSection === section.title} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 {section.items.map((item, index) => (
                   <ListItem

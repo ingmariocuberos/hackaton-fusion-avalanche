@@ -8,8 +8,10 @@ import { PrivyProvider } from '@privy-io/react-auth';
 import AppRoutes from './router';
 import { materialUiTheme } from './UI/material-ui-theme';
 import envs from './config/env.config';
+import { setYupLocale } from './external/yup/validations';
 
 const App: React.FC = () => {
+  setYupLocale();
   const privyAppId = envs.privyAppId;
   return (
     <PrivyProvider appId={privyAppId}>

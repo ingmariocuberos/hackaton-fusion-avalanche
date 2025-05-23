@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Content from '../pages/content/Content';
 import ContentDetail from '../pages/contentDetail/ContentDetail';
-import Login from '../pages/login/Login';
+import Auth from '../pages/auth/Auth';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -23,7 +23,7 @@ const AppRoutes: React.FC = () => (
       path="/login" 
       element={
         <PublicRoute>
-          <Login />
+          <Auth />
         </PublicRoute>
       } 
     />
@@ -43,7 +43,8 @@ const AppRoutes: React.FC = () => (
         </PrivateRoute>
       }
     />
-    <Route path="*" element={<Navigate to="/" />} />
+    <Route path="/auth" element={<Auth />} />
+    <Route path="*" element={<Navigate to="/auth" replace />} />
   </Routes>
 );
 
