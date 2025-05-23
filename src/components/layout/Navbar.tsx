@@ -16,49 +16,11 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
-import { usePrivy } from '@privy-io/react-auth';
-
-const WalletConnectButton = () => {
-  const { connectWallet, ready, authenticated, user, logout } = usePrivy();
-  if (!ready) return null;
-
-  const handleConnect = () => {
-    connectWallet({
-      walletList: ['metamask', 'detected_ethereum_wallets', 'coinbase_wallet', 'rainbow', 'wallet_connect'],
-    });
-  };
-
-  return (
-    <Box sx={{ ml: 2 }}>
-      {authenticated ? (
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          sx={{ minWidth: 0, px: 1.5, fontSize: 13 }}
-          onClick={logout}
-        >
-          {user?.wallet?.address
-            ? `${user.wallet.address.slice(0, 6)}...${user.wallet.address.slice(-4)}`
-            : user?.email?.address || 'Desconectar'}
-        </Button>
-      ) : (
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          sx={{ minWidth: 0, px: 1.5, fontSize: 13 }}
-          onClick={handleConnect}
-        >
-          Conectar billetera
-        </Button>
-      )}
-    </Box>
-  );
-};
+import WalletConnectButton from './WalletConnectButton';
 
 const Navbar = () => {
   const { currentUser } = useAuth();
+  console.log('currentUser', currentUser);
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -80,6 +42,7 @@ const Navbar = () => {
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
+    handleClose();
   };
 
   const handleNavigate = (path: string) => {
@@ -90,14 +53,14 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <AppBar position="static" color="default" elevation={1}>
+    <AppBar position="fixed" color="default" elevation={1}>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography
           variant="h6"
           component="div"
           sx={{ flexGrow: 0, color: 'inherit', minWidth: '150px' }}
         >
-          {currentUser?.displayName || 'Mario Cuberos'}
+          {currentUser?.displayName || ''}
         </Typography>
 
         {isMobile ? (
@@ -128,22 +91,34 @@ const Navbar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem 
+              <MenuItem
                 onClick={() => handleNavigate('/')}
                 selected={isActive('/')}
               >
                 Inicio
               </MenuItem>
-              <MenuItem 
-                onClick={() => handleNavigate('/contenido')}
-                selected={isActive('/contenido')}
-              >
-                Contenido
-              </MenuItem>
-              <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
-              <MenuItem>
-                <WalletConnectButton />
-              </MenuItem>
+              {
+                !currentUser && (
+                  <>
+                    <MenuItem onClick={() => handleNavigate('/login')}>Iniciar Sesión</MenuItem>
+                  </>
+                )
+              }
+              {
+                currentUser &&
+                <>
+                  <MenuItem
+                    onClick={() => handleNavigate('/contenido')}
+                    selected={isActive('/contenido')}
+                  >
+                    Contenido
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
+                  <MenuItem>
+                    <WalletConnectButton onMenuAction={handleClose} />
+                  </MenuItem>
+                </>
+              }
             </Menu>
           </>
         ) : (
@@ -157,29 +132,43 @@ const Navbar = () => {
             >
               Inicio
             </Button>
-            <Button
-              color="inherit"
-              startIcon={<Book />}
-              onClick={() => handleNavigate('/contenido')}
-              sx={{
-                backgroundColor: isActive('/contenido') ? 'rgba(0, 0, 0, 0.08)' : 'transparent'
-              }}
-            >
-              Contenido
-            </Button>
+            {currentUser ? (
+              <Button
+                color="inherit"
+                startIcon={<Book />}
+                onClick={() => handleNavigate('/contenido')}
+                sx={{
+                  backgroundColor: isActive('/contenido') ? 'rgba(0, 0, 0, 0.08)' : 'transparent'
+                }}
+              >
+                Contenido
+              </Button>
+            ) : (
+              <Button
+                color="inherit"
+                onClick={() => handleNavigate('/login')}
+                sx={{
+                  backgroundColor: isActive('/login') ? 'rgba(0, 0, 0, 0.08)' : 'transparent'
+                }}
+              >
+                Iniciar Sesión
+              </Button>
+            )}
             <Box sx={{ flexGrow: 1 }} />
             <AccountCircle />
-            <Button
-              variant="outlined"
-              color="inherit"
-              onClick={handleLogout}
-            >
-              Cerrar Sesión
-            </Button>
+            {
+              currentUser && (
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={handleLogout}
+                >
+                  Cerrar Sesión
+                </Button>)
+            }
             <WalletConnectButton />
           </Box>
         )}
-        {!isMobile && <WalletConnectButton />}
       </Toolbar>
     </AppBar>
   );

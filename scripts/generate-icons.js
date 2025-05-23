@@ -1,4 +1,4 @@
-const sharp = require("sharp");
+const Jimp = require("jimp");
 const fs = require("fs");
 const path = require("path");
 
@@ -12,14 +12,18 @@ if (!fs.existsSync(outputDir)) {
 }
 
 // Generar íconos para cada tamaño
-sizes.forEach((size) => {
-  sharp(sourceIcon)
-    .resize(size, size)
-    .toFile(path.join(outputDir, `logo${size}.png`))
-    .then(() => {
+async function generateIcons() {
+  try {
+    const image = await Jimp.read(sourceIcon);
+    
+    for (const size of sizes) {
+      const resizedImage = image.clone().resize(size, size);
+      await resizedImage.writeAsync(path.join(outputDir, `logo${size}.png`));
       console.log(`Generated logo${size}.png`);
-    })
-    .catch((err) => {
-      console.error(`Error generating logo${size}.png:`, err);
-    });
-});
+    }
+  } catch (err) {
+    console.error('Error generating icons:', err);
+  }
+}
+
+generateIcons();

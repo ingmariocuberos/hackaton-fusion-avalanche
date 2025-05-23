@@ -1,10 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import envs from './env.config';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  apiKey: envs.firebaseApiKey,
+  authDomain: envs.firebaseAuthDomain,
+  projectId: envs.firebaseProjectId,
 };
 
 const app = initializeApp(firebaseConfig);
