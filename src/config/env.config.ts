@@ -3,7 +3,6 @@ interface EnvConfig {
   firebaseAuthDomain: string;
   firebaseProjectId: string;
   privyAppId: string;
-  encryptionKey: string;
   apiBaseUrl: string;
 }
 
@@ -13,7 +12,6 @@ const validateEnv = (): EnvConfig => {
     'REACT_APP_FIREBASE_AUTH_DOMAIN',
     'REACT_APP_FIREBASE_PROJECT_ID',
     'REACT_APP_PRIVY_APP_ID',
-    'REACT_APP_ENCRYPTION_KEY',
     'REACT_APP_API_BASE_URL'
   ];
 
@@ -32,7 +30,6 @@ const validateEnv = (): EnvConfig => {
     firebaseAuthDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN!,
     firebaseProjectId: process.env.REACT_APP_FIREBASE_PROJECT_ID!,
     privyAppId: process.env.REACT_APP_PRIVY_APP_ID!,
-    encryptionKey: process.env.REACT_APP_ENCRYPTION_KEY!,
     apiBaseUrl: process.env.REACT_APP_API_BASE_URL!
   };
 };
