@@ -12,6 +12,7 @@ import * as logger from "firebase-functions/logger";
 import { initializeApp } from "firebase-admin/app";
 import { avaxCurrencyConversion } from './avax-currency-conversion/avaxCurrencyConversion';
 import { groqPdf } from './groq/groqPdf';
+import { getFilesFromStorage } from './get-files-from-storage/getFilesFromStorage';
 
 
 initializeApp();
@@ -24,4 +25,4 @@ export const helloWorld = onRequest((request, response) => {
   response.send("Hello from Firebase!");
 });
 
-export { avaxCurrencyConversion, groqPdf };
+export { avaxCurrencyConversion, groqPdf, getFilesFromStorage };
