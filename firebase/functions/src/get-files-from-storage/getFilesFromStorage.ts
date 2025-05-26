@@ -4,10 +4,8 @@ import { files } from "../constants/filesConstants";
 
 export const getFilesFromStorage = onRequest(async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name } = req.query;
     const fileRoute = files.find((file) => file.name === name);
-    console.log('files', files);
-    console.log('req.bodyer', req.body);
     if (!fileRoute) {
       res.status(404).send('Referencia de archivo no encontrada');
       return;
@@ -25,8 +23,7 @@ export const getFilesFromStorage = onRequest(async (req, res) => {
     const readStream = file.createReadStream();
 
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${fileRoute.name}"`);
-    res.setHeader('File-name-inzigne', fileRoute.fileName);
+    res.setHeader('Content-Disposition', `attachment; filename="${fileRoute.name}.pdf"`);
 
     readStream.pipe(res);
     return;

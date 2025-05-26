@@ -6,10 +6,8 @@ const storage_1 = require("firebase-admin/storage");
 const filesConstants_1 = require("../constants/filesConstants");
 exports.getFilesFromStorage = (0, https_1.onRequest)(async (req, res) => {
     try {
-        const { name } = req.body;
+        const { name } = req.query;
         const fileRoute = filesConstants_1.files.find((file) => file.name === name);
-        console.log('files', filesConstants_1.files);
-        console.log('req.bodyer', req.body);
         if (!fileRoute) {
             res.status(404).send('Referencia de archivo no encontrada');
             return;
@@ -23,7 +21,7 @@ exports.getFilesFromStorage = (0, https_1.onRequest)(async (req, res) => {
         }
         const readStream = file.createReadStream();
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename="${fileRoute.name}"`);
+        res.setHeader('Content-Disposition', `attachment; filename="${fileRoute.name}.pdf"`);
         readStream.pipe(res);
         return;
     }

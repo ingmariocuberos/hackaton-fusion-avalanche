@@ -1,7 +1,6 @@
 export const files: [Record<string, string>] = [
   {
-    name: 'Matriz Gauss Jordan',
-    fileName: 'matriz-gauss-jordan.pdf',
+    name: 'Ecosistemas',
     path: 'Ecosistemas/ecosistemas-guia-1.pdf',
   },
 ];

@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.files = void 0;
 exports.files = [
     {
-        name: 'Matriz Gauss Jordan',
+        name: 'Ecosistemas',
         path: 'Ecosistemas/ecosistemas-guia-1.pdf',
     },
 ];
-//# sourceMappingURL=filesConstants.js.map
