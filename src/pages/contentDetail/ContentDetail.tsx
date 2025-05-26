@@ -19,6 +19,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { contentDetailContainerStyle } from './styles';
 import { contentData } from '../../data/contentData';
 import { apiService } from '../../global/standardService/apiService';
+import { getFilesFromStorage } from '../../services/files/filesService';
 
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
@@ -102,11 +103,15 @@ const ContentDetail: React.FC = () => {
         </Button>
       </Box>
 
+      <Button onClick={() => getFilesFromStorage(subcategory.title)}>
+        Obtener archivos
+      </Button>
+
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           {subcategory.title}
         </Typography>
-        
+
         <Typography variant="subtitle1" color="text.secondary" gutterBottom>
           {category.title}
         </Typography>
