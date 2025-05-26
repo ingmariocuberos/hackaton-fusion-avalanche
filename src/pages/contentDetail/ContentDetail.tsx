@@ -20,6 +20,7 @@ import { contentDetailContainerStyle } from './styles';
 import { contentData } from '../../data/contentData';
 import { apiService } from '../../global/standardService/apiService';
 import { getFilesFromStorage } from '../../services/files/filesService';
+import { jsPDF } from "jspdf";
 
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
@@ -66,24 +67,45 @@ const ContentDetail: React.FC = () => {
   const handleStart = async () => {
     setLoadingPDF(true);
     try {
-      const blob = await apiService.post<Blob>('/groq-pdf', {
+      console.log("handleStart called");
+      await getFilesFromStorage(subcategory.title);
+      const groqResponse = await apiService.post<{data: {pdfContent: string}}>('groqPdf', {
         topic: subcategory.title,
         category: category.title,
       }, {
-        'Content-Type': 'application/json',
-        'Accept': 'application/pdf'
+        'Content-Type': 'application/json'
+      });
+      const pdfContent = groqResponse.data.pdfContent;
+
+      const doc = new jsPDF();
+      const lineHeight = 10;
+      const margin = 10;
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const lines = doc.splitTextToSize(pdfContent, 180);
+
+      let cursorY = margin;
+
+      lines.forEach((line: string) => {
+        if (cursorY + lineHeight > pageHeight - margin) {
+          doc.addPage();
+          cursorY = margin;
+        }
+        doc.text(line, margin, cursorY);
+        cursorY += lineHeight;
       });
 
-      const url = window.URL.createObjectURL(blob);
+      const pdfBlob = doc.output("blob");
+      const url = window.URL.createObjectURL(pdfBlob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${subcategory.title.replace(/\s+/g, '_')}.pdf`;
+      a.download = `Motivación.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
       setOpenSnackbar(true);
     } catch (err) {
+      console.error('Error en handleStart:', err);
       alert('Error al generar el PDF');
     } finally {
       setLoadingPDF(false);
@@ -102,10 +124,6 @@ const ContentDetail: React.FC = () => {
           Volver al contenido
         </Button>
       </Box>
-
-      <Button onClick={() => getFilesFromStorage(subcategory.title)}>
-        Obtener archivos
-      </Button>
 
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
