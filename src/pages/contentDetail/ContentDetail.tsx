@@ -20,9 +20,7 @@ import { contentDetailContainerStyle } from './styles';
 import { contentData } from '../../data/contentData';
 import { apiService } from '../../global/standardService/apiService';
 import { getFilesFromStorage } from '../../services/files/filesService';
-import { jsPDF } from "jspdf";
-import plantilla from '../../assets/motivacion-plantillas.jpg'; // Si usas Webpack/Vite, etc.
-
+import { createMotivationalPDF } from '../../global/pdf-creation/createMotivationalPdf';
 const INCENTIVES = [
   { label: 'Básico', value: '0.00000' },
   { label: 'Avanzado', value: '0.00000' },
@@ -70,7 +68,7 @@ const ContentDetail: React.FC = () => {
     try {
       console.log("handleStart called");
       await getFilesFromStorage(subcategory.title);
-      const groqResponse = await apiService.post<{data: {pdfContent: string}}>('groqPdf', {
+      const groqResponse = await apiService.post<{ data: { pdfContent: string } }>('groqPdf', {
         topic: subcategory.title,
         category: category.title,
       }, {
@@ -78,78 +76,17 @@ const ContentDetail: React.FC = () => {
       });
       const pdfContent = groqResponse.data.pdfContent;
 
-      const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
+      const pdfBlob = createMotivationalPDF(pdfContent, subcategory, category, incentives);
 
-      const img = new Image();
-      img.src = plantilla;
-
-      img.onload = function() {
-        // Fondo en la primera página
-        doc.addImage(img, 'JPEG', 0, 0, pageWidth, pageHeight);
-
-        let cursorY = 30;
-
-        // Título principal
-        doc.setFontSize(20);
-        doc.text(subcategory.title, pageWidth / 2, cursorY, { align: 'center' });
-        cursorY += 15;
-
-        // Categoría
-        doc.setFontSize(14);
-        doc.text(`Categoría: ${category.title}`, 15, cursorY);
-        cursorY += 10;
-
-        // Descripción
-        doc.setFontSize(12);
-        doc.text('Descripción:', 15, cursorY);
-        cursorY += 7;
-        const descLines = doc.splitTextToSize(subcategory.description, pageWidth - 30);
-        doc.text(descLines, 15, cursorY);
-        cursorY += descLines.length * 7 + 5;
-
-        // Incentivos
-        doc.setFontSize(12);
-        doc.text('Incentivos:', 15, cursorY);
-        cursorY += 7;
-        incentives.forEach(item => {
-          doc.text(`- ${item.label}: ${item.value} AVAX`, 20, cursorY);
-          cursorY += 7;
-        });
-        cursorY += 5;
-
-        // Contenido generado por Groq
-        doc.setFontSize(14);
-        doc.text('Contenido:', 15, cursorY);
-        cursorY += 10;
-        doc.setFontSize(12);
-        const contentLines = doc.splitTextToSize(pdfContent, pageWidth - 30);
-        const margin = 15;
-        const lineHeight = 7;
-
-        contentLines.forEach((line: string) => {
-          if (cursorY + lineHeight > pageHeight - margin) {
-            doc.addPage();
-            doc.addImage(img, 'JPEG', 0, 0, pageWidth, pageHeight); // Fondo en cada página
-            cursorY = margin;
-          }
-          doc.text(line, margin, cursorY);
-          cursorY += lineHeight;
-        });
-
-        // Descargar PDF
-        const pdfBlob = doc.output("blob");
-        const url = window.URL.createObjectURL(pdfBlob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Motivación.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-        setOpenSnackbar(true);
-      };
+      const url = window.URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Motivación.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      setOpenSnackbar(true);
     } catch (err) {
       console.error('Error en handleStart:', err);
       alert('Error al generar el PDF');
