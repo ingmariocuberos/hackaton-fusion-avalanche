@@ -157,6 +157,7 @@ const ContentDetail: React.FC = () => {
                   error={touched.studentName && Boolean(errors.studentName)}
                   helperText={touched.studentName && errors.studentName}
                   sx={{ marginBottom: 3 }}
+                  autoComplete="off"
                 />
                 <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                   Elige los incentivos:
