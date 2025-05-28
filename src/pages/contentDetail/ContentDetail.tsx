@@ -74,17 +74,18 @@ const ContentDetail: React.FC = () => {
   const handleStart = async (values: { studentName: string }) => {
     setLoadingPDF(true);
     try {
-      console.log("handleStart called");
       await getFilesFromStorage(subcategory.title);
+      const firstName = values.studentName.trim().split(" ")[0];
       const groqResponse = await apiService.post<{ data: { pdfContent: string } }>('groqPdf', {
         topic: subcategory.title,
         category: category.title,
+        studentName: firstName
       }, {
         'Content-Type': 'application/json'
       });
-      const pdfContent = groqResponse.data.pdfContent;
+      const { pdfContent } = groqResponse.data;
 
-      const pdfBlob = createMotivationalPDF(pdfContent, subcategory, category, incentives);
+      const pdfBlob = await createMotivationalPDF(pdfContent, subcategory, category, incentives);
 
       const url = window.URL.createObjectURL(pdfBlob);
       const a = document.createElement('a');
@@ -145,18 +146,17 @@ const ContentDetail: React.FC = () => {
           >
             {({ errors, touched, isValid, dirty }) => (
               <Form>
-                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-                  Nombre del estudiante:
-                </Typography>
                 <Field
                   as={TextField}
                   fullWidth
                   variant="outlined"
                   margin="dense"
+                  label="Nombre del estudiante"
                   name="studentName"
                   error={touched.studentName && Boolean(errors.studentName)}
                   helperText={touched.studentName && errors.studentName}
                   sx={{ marginBottom: 3 }}
+                  autoComplete="off"
                 />
                 <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                   Elige los incentivos:
