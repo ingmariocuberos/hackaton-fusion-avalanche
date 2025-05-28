@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import {
   Container,
   Typography,
@@ -31,6 +33,13 @@ function formatCOP(value: number) {
   return value.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 }
 
+const validationSchema = Yup.object().shape({
+  studentName: Yup.string()
+    .required('El nombre del estudiante es requerido')
+    .min(2, 'El nombre debe tener al menos 2 caracteres')
+    .max(30, 'El nombre no puede tener más de 30 caracteres')
+});
+
 const ContentDetail: React.FC = () => {
   const { categoryId, subcategoryId } = useParams<{ categoryId: string; subcategoryId: string }>();
   const navigate = useNavigate();
@@ -55,7 +64,6 @@ const ContentDetail: React.FC = () => {
   }
 
   const handleIncentiveChange = (index: number, value: string) => {
-    // Permitir solo números y hasta 5 decimales
     if (/^\d*(\.\d{0,5})?$/.test(value) || value === '') {
       const newIncentives = [...incentives];
       newIncentives[index].value = value;
@@ -63,7 +71,7 @@ const ContentDetail: React.FC = () => {
     }
   };
 
-  const handleStart = async () => {
+  const handleStart = async (values: { studentName: string }) => {
     setLoadingPDF(true);
     try {
       console.log("handleStart called");
@@ -126,65 +134,93 @@ const ContentDetail: React.FC = () => {
           {subcategory.description}
         </Typography>
 
-        {/* Nueva sección de incentivos */}
         <Box mt={5}>
           <Typography variant="h5" gutterBottom>
             ¡Vamos a aprender!
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-            Elige los incentivos:
-          </Typography>
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            {incentives.map((item, idx) => {
-              const avax = parseFloat(item.value) || 0;
-              const cop = avaxPrice ? avax * avaxPrice : 0;
-              return (
-                <Grid size={{ xs: 12, sm: 4 }} key={item.label}>
-                  <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      {item.label}
-                    </Typography>
-                    <TextField
-                      value={item.value}
-                      onChange={e => handleIncentiveChange(idx, e.target.value)}
-                      inputProps={{
-                        inputMode: 'decimal',
-                        pattern: '^\\d*(\\.\\d{0,5})?$',
-                        style: { textAlign: 'center', fontFamily: 'monospace', fontSize: 24 },
-                      }}
-                      variant="outlined"
-                      fullWidth
-                      margin="dense"
-                    />
-                    <Typography variant="body2" color="text.secondary">
-                      AVAX
-                    </Typography>
-                    {avaxLoading ? (
-                      <Box mt={1}><CircularProgress size={18} /></Box>
-                    ) : avaxError ? (
-                      <Typography variant="caption" color="error">No se pudo obtener el precio</Typography>
-                    ) : (
-                      <Typography variant="body2" color="text.secondary" mt={0.5}>
-                        aprox {formatCOP(cop)} COP
-                      </Typography>
-                    )}
-                  </Paper>
+          <Formik
+            initialValues={{ studentName: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleStart}
+          >
+            {({ errors, touched, isValid, dirty }) => (
+              <Form>
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                  Nombre del estudiante:
+                </Typography>
+                <Field
+                  as={TextField}
+                  fullWidth
+                  variant="outlined"
+                  margin="dense"
+                  name="studentName"
+                  error={touched.studentName && Boolean(errors.studentName)}
+                  helperText={touched.studentName && errors.studentName}
+                  sx={{ marginBottom: 3 }}
+                />
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                  Elige los incentivos:
+                </Typography>
+                <Grid container spacing={2} sx={{ mt: 2 }}>
+                  {incentives.map((item, idx) => {
+                    const avax = parseFloat(item.value) || 0;
+                    const cop = avaxPrice ? avax * avaxPrice : 0;
+                    return (
+                      <Grid size={{ xs: 12, sm: 4 }} key={item.label}>
+                        <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
+                          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                            {item.label}
+                          </Typography>
+                          <TextField
+                            value={item.value}
+                            onChange={e => handleIncentiveChange(idx, e.target.value)}
+                            inputProps={{
+                              inputMode: 'decimal',
+                              pattern: '^\\d*(\\.\\d{0,5})?$',
+                              style: { textAlign: 'center', fontFamily: 'monospace', fontSize: 24 },
+                            }}
+                            variant="outlined"
+                            fullWidth
+                            margin="dense"
+                          />
+                          <Typography variant="body2" color="text.secondary">
+                            AVAX
+                          </Typography>
+                          {avaxLoading ? (
+                            <Box mt={1}><CircularProgress size={18} /></Box>
+                          ) : avaxError ? (
+                            <Typography variant="caption" color="error">No se pudo obtener el precio</Typography>
+                          ) : (
+                            <Typography variant="body2" color="text.secondary" mt={0.5}>
+                              aprox {formatCOP(cop)} COP
+                            </Typography>
+                          )}
+                        </Paper>
+                      </Grid>
+                    );
+                  })}
                 </Grid>
-              );
-            })}
-          </Grid>
-          <Box mt={4} textAlign="center">
-            {loadingPDF ? (
-              <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                <CircularProgress size={32} />
-                <Typography variant="body2" color="text.secondary">Generando PDF...</Typography>
-              </Box>
-            ) : (
-              <Button variant="contained" color="primary" size="large" onClick={handleStart}>
-                Empezar!
-              </Button>
+                <Box mt={4} textAlign="center">
+                  {loadingPDF ? (
+                    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                      <CircularProgress size={32} />
+                      <Typography variant="body2" color="text.secondary">Generando PDF...</Typography>
+                    </Box>
+                  ) : (
+                    <Button 
+                      variant="contained" 
+                      color="primary" 
+                      size="large" 
+                      type="submit"
+                      disabled={!(isValid && dirty)}
+                    >
+                      Empezar!
+                    </Button>
+                  )}
+                </Box>
+              </Form>
             )}
-          </Box>
+          </Formik>
         </Box>
       </Paper>
       <Snackbar
